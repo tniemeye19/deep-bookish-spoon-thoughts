@@ -4,37 +4,24 @@ import { Redirect, useParams } from 'react-router-dom';
 
 import ThoughtList from '../components/ThoughtList';
 import ThoughtForm from '../components/ThoughtForm';
+import FriendList from '../components/FriendList';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
-import FriendList from '../components/FriendList';
+import { ADD_FRIEND } from '../utils/mutations';
 
 import Auth from '../utils/auth';
-
-import { ADD_FRIEND } from '../utils/mutations';
-import { NoUnusedFragmentsRule } from 'graphql';
 
 const Profile = () => {
 
   const { username: userParam } = useParams();
 
+  const [addFriend] = useMutation(ADD_FRIEND);
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam }
   });
 
   const user = data?.me || data?.user || {};
-
-  const [addFriend] = useMutation(ADD_FRIEND);
-
-  const handleClick = async () => {
-    try {
-      await addFriend({
-        variables: { id: user._id }
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -53,6 +40,16 @@ const Profile = () => {
       </h4>
     );
   }
+
+  const handleClick = async () => {
+    try {
+      await addFriend({
+        variables: { id: user._id }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div>

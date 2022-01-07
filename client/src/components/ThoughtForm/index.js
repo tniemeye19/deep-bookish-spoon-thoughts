@@ -8,30 +8,6 @@ const ThoughtForm = () => {
     const [thoughtText, setText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
-    const handleChange = event => {
-        if (event.target.value.length <= 280) {
-            setText(event.target.value);
-            setCharacterCount(event.target.value.length);
-        }
-    };
-
-    const handleFormSubmit = async event => {
-        event.preventDefault();
-
-        try {
-            // add thought to database
-            await addThought({
-                variables: { thoughtText }
-            });
-
-            // clear form value
-            setText('');
-            setCharacterCount(0);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
     const [addThought, { error }] = useMutation(ADD_THOUGHT, {
         update(cache, { data: { addThought } }) {
             try {
@@ -56,6 +32,30 @@ const ThoughtForm = () => {
             });
         }
     });
+
+    const handleChange = event => {
+        if (event.target.value.length <= 280) {
+            setText(event.target.value);
+            setCharacterCount(event.target.value.length);
+        }
+    };
+
+    const handleFormSubmit = async event => {
+        event.preventDefault();
+
+        try {
+            // add thought to database
+            await addThought({
+                variables: { thoughtText }
+            });
+
+            // clear form value
+            setText('');
+            setCharacterCount(0);
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     return (
         <div>

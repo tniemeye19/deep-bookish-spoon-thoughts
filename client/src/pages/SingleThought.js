@@ -9,7 +9,7 @@ import ReactionForm from '../components/ReactionForm';
 
 import Auth from '../utils/auth';
 
-const SingleThought = props => {
+const SingleThought = (props) => {
 
   const { id: thoughtId } = useParams();
 
@@ -37,8 +37,13 @@ const SingleThought = props => {
         </div>
       </div>
 
-      {thought.reactionCount > 0 && <ReactionList reactions={thought.reactions} />}
-      {Auth.loggedIn() && <ReactionForm thoughtId={thought._id} />}
+      {thought.reactionCount > 0 && (
+        <ReactionList reactions={thought.reactions} />
+      )}
+
+      {Auth.loggedIn() && (
+        <ReactionForm thoughtId={thought._id} />
+      )}
     </div>
   );
 };

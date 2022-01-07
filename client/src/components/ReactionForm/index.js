@@ -54,6 +54,8 @@ const ReactionForm = ({ thoughtId }) => {
                     Submit
                 </button>
             </form>
+
+            {error && <div>Something went wrong...</div>}
         </div>
     );
 };

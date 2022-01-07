@@ -16,13 +16,6 @@ const resolvers = {
 
             throw new AuthenticationError('Not logged in');
         },
-        thoughts: async (parent, { username }) => {
-            const params = username ? { username } : {};
-            return Thought.find().sort({ createdAt: -1 });
-        },
-        thought: async (parent, { _id }) => {
-            return Thought.findOne({ _id });
-        },
         users: async () => {
             return User.find()
                 .select('-__v -password')
@@ -34,7 +27,16 @@ const resolvers = {
                 .select('-__v -password')
                 .populate('friends')
                 .populate('thoughts')
-        }
+        },
+        thoughts: async (parent, { username }) => {
+            const params = username ? { username } : {};
+            return Thought.find().sort({ createdAt: -1 });
+        },
+        thought: async (parent, { _id }) => {
+            return Thought.findOne({ _id });
+        },
+
+
     },
     Mutation: {
         addUser: async (parent, args) => {

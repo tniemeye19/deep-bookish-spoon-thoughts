@@ -1,10 +1,11 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
-import { QUERY_THOUGHTS, QUERY_ME_BASIC } from '../utils/queries';
 import ThoughtList from '../components/ThoughtList';
 import FriendList from '../components/FriendList';
 import ThoughtForm from '../components/ThoughtForm';
+
 import Auth from '../utils/auth';
+import { useQuery } from '@apollo/client';
+import { QUERY_THOUGHTS, QUERY_ME_BASIC } from '../utils/queries';
 
 const Home = () => {
   // use useQuery hook to make query request
@@ -14,7 +15,6 @@ const Home = () => {
   const { data: userData } = useQuery(QUERY_ME_BASIC);
 
   const thoughts = data?.thoughts || [];
-  console.log(thoughts);
 
   const loggedIn = Auth.loggedIn();
 
