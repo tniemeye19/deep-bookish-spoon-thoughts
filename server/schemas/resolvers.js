@@ -60,6 +60,9 @@ const resolvers = {
 
             const token = signToken(user);
 
+            console.log('LOGIN USER: ', { user });
+            console.log('LOGIN TOKEN: ', { token });
+
             return { token, user };
         },
         addThought: async (parent, args, context) => {
